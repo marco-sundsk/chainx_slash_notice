@@ -1,3 +1,8 @@
+.DS_Store
+.vscode
+.env
+yarn.lock
+
 # Logs
 logs
 *.log

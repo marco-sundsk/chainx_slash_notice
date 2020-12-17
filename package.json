@@ -1,0 +1,12 @@
+{
+  "name": "slash-notice",
+  "version": "0.0.9",
+  "description": "ChainX Slash Notice",
+  "license": "MIT",
+  "dependencies": {
+    "dotenv": "^8.2.0",
+    "nodemailer": "^6.1.1",
+    "@chainx-v2/api": "^0.0.49",
+    "@polkadot/api": "^2.9.1"
+  }
+}
