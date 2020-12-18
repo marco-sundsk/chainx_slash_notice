@@ -1,14 +1,22 @@
 'use strict';
 
-const curTime = require("./util_time");
+require("dotenv").config();
 
-const { ApiPromise, Keyring } = require("@polkadot/api");
-const { stringToU8a, u8aToHex } = require('@polkadot/util');
+const curTime = require("./util_time");
+const email = require("./util_email");
+
+const { ApiPromise } = require("@polkadot/api");
 const { WsProvider } = require("@polkadot/rpc-provider");
 const { options } = require("@chainx-v2/api");
 
 async function notify(height, addr, slashAmount) {
-    console.log('Slash happened at ', height, 'for ', addr, 'of amount ', slashAmount);
+    let content = 'Slash happened at ' + height + 'for ' + addr + 'of amount ' + slashAmount;
+    console.log(content);
+    if (process.env.email_send.toLowerCase() == 'true') {
+        console.log('Sending email ...');
+        // email.sendMail('ChainX Slash Notice', content);
+    }
+    
 }
 
 async function listenBlock(api, addr, slashAmount) {
@@ -20,7 +28,18 @@ async function listenBlock(api, addr, slashAmount) {
 }
 
 async function main() {
-    const wsProvider = new WsProvider("wss://mainnet.chainx.org/ws");
+    console.log('Env is:');
+    console.log('chainx_ws_addr:', process.env.chainx_ws_addr);
+    console.log('email_send:', process.env.email_send);
+    console.log('email_host:', process.env.email_host);
+    console.log('email_port:', process.env.email_port);
+    console.log('email_uid:', process.env.email_uid);
+    console.log('email_from:', process.env.email_from);
+    console.log('email_to:', process.env.email_to);
+
+
+
+    const wsProvider = new WsProvider(process.env.chainx_ws_addr);
     const api = await ApiPromise.create(options({ provider: wsProvider }));
     await api.isReady;
 
