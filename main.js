@@ -33,6 +33,7 @@ async function main() {
     console.log('email_send:', process.env.email_send);
     console.log('email_host:', process.env.email_host);
     console.log('email_port:', process.env.email_port);
+    console.log('email_ssl:', process.env.email_ssl);
     console.log('email_uid:', process.env.email_uid);
     console.log('email_from:', process.env.email_from);
     console.log('email_to:', process.env.email_to);
