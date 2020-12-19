@@ -1,24 +1,23 @@
 'use strict';
-require("dotenv").config();
 
-// const curTime = require("./common");
-// const cfg = require("./config");
+const curTime = require("./util_time");
+const cfg = require("./config");
 const nodemailer = require('nodemailer');
+
 const transporter = nodemailer.createTransport({
-    "host": process.env.email_host,
-    "port": process.env.email_port,
-    "secureConnection": process.env.email_ssl.toLowerCase() == 'true', // use SSL
+    "host": cfg.email.host,
+    "port": cfg.email.port,
+    "secureConnection": cfg.email.ssl, // use SSL
     "auth": {
-        "user": process.env.email_uid, // user name
-        "pass": process.env.email_pwd  // password
+        "user": cfg.email.uid, // user name
+        "pass": cfg.email.pwd  // password
     }
 });
 
-exports.sendMail = async function (title, body) {  // 发邮件
-    console.log('title:', title, 'body:', body);
+exports.sendMail = async function (title, body, to) {
     let mailOptions = {
-        from: process.env.email_from, // sender address mailfrom must be same with the user
-        to: process.env.email_to, // list of receivers
+        from: cfg.email.from, // sender address mailfrom must be same with the user
+        to: to, // list of receivers
         subject: title, // Subject line
         text: body, // plaintext body
     };

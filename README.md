@@ -8,5 +8,6 @@ A Tool for monitor and notify slash action on ChainX2.0
 ```shell
 $ yarn
 $ cp .env.example .env
-
+$ cp config.json.example config.json
 ```
+

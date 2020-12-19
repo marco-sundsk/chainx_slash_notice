@@ -1,6 +1,8 @@
 .DS_Store
 .vscode
 .env
+config.json
+try_*
 yarn.lock
 
 # Logs

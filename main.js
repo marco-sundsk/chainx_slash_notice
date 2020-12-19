@@ -1,7 +1,7 @@
 'use strict';
 
 require("dotenv").config();
-
+const cfg = require("./config");
 const curTime = require("./util_time");
 const email = require("./util_email");
 
@@ -10,11 +10,12 @@ const { WsProvider } = require("@polkadot/rpc-provider");
 const { options } = require("@chainx-v2/api");
 
 async function notify(height, addr, slashAmount) {
-    let content = 'Slash happened at ' + height + 'for ' + addr + 'of amount ' + slashAmount;
+    let content = 'Slash happened at ' + height + ' for ' + cfg.validators[addr].name + ' with amount ' + slashAmount;
     console.log(content);
-    if (process.env.email_send.toLowerCase() == 'true') {
+    let to = cfg.validators[addr].email_to.join(', ');
+    if (cfg.email.enable && to != "") {
         console.log('Sending email ...');
-        email.sendMail('ChainX20 Slash Notice', content);
+        email.sendMail('ChainX20 Slash Notice', content, to);
     }
     
 }
@@ -30,13 +31,14 @@ async function listenBlock(api, addr, slashAmount) {
 async function main() {
     console.log('Env is:');
     console.log('chainx_ws_addr:', process.env.chainx_ws_addr);
-    console.log('email_send:', process.env.email_send);
-    console.log('email_host:', process.env.email_host);
-    console.log('email_port:', process.env.email_port);
-    console.log('email_ssl:', process.env.email_ssl);
-    console.log('email_uid:', process.env.email_uid);
-    console.log('email_from:', process.env.email_from);
-    console.log('email_to:', process.env.email_to);
+    console.log('Cfg is:');
+    console.log('email enabled:', cfg.email.enabled);
+    console.log('email host:', cfg.email.host);
+    console.log('email port:', cfg.email.port);
+    console.log('email ssl:', cfg.email.ssl);
+    console.log('email uid:', cfg.email.uid);
+    console.log('email from:', cfg.email.from);
+
 
 
 
@@ -89,7 +91,7 @@ Slash happened at 334277for 5Qhgdc7UcEJUJ7BN851ykMPyV4TEgc4FcSLFwxheSXiny9UFof a
                         slashAmount = data.toString();
                     }
                 });
-                if (addr != 'N/A') {
+                if (addr in cfg.validators) {
                     listenBlock(api, addr, slashAmount);
                 }
                 
