@@ -23,6 +23,10 @@ $ vim config.json
 Add validators you care about to `validators`.  
 Modify `email` to your own email settings.  
 
+## Run
+```shell
+$ node main.js
+```
 
 ## Logic
 * listen to Slashed Event;
