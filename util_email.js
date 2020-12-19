@@ -23,7 +23,7 @@ exports.sendMail = async function (title, body, to) {
     };
     try {
         let info = await transporter.sendMail(mailOptions);
-        console.log('Message sent: ' + info.response);
+        console.log(curTime(), 'Message sent: ' + info.response);
     } catch(err) {
         console.log(err);
     }
