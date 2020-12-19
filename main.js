@@ -32,7 +32,7 @@ async function main() {
     console.log('Env is:');
     console.log('chainx_ws_addr:', process.env.chainx_ws_addr);
     console.log('Cfg is:');
-    console.log('email enabled:', cfg.email.enabled);
+    console.log('email enabled:', cfg.email.enable);
     console.log('email host:', cfg.email.host);
     console.log('email port:', cfg.email.port);
     console.log('email ssl:', cfg.email.ssl);
