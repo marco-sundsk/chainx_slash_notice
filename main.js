@@ -14,7 +14,7 @@ async function notify(height, addr, slashAmount) {
     console.log(content);
     if (process.env.email_send.toLowerCase() == 'true') {
         console.log('Sending email ...');
-        // email.sendMail('ChainX Slash Notice', content);
+        email.sendMail('ChainX20 Slash Notice', content);
     }
     
 }
