@@ -65,6 +65,14 @@ async function main() {
             const types = event.typeDef;
 
             if (event.method == 'Slashed') {
+/**
+xStaking:Slashed:: (phase=Initialization)
+event.meta.doc: [ A validator (and its reward pot) was slashed. [validator, slashed_amount]]
+loop_event.data:        AccountId: 5Qhgdc7UcEJUJ7BN851ykMPyV4TEgc4FcSLFwxheSXiny9UF
+loop_event.data:        Balance: 114012468
+Chain Block: #334277
+Slash happened at 334277for 5Qhgdc7UcEJUJ7BN851ykMPyV4TEgc4FcSLFwxheSXiny9UFof amount 114012468
+*/
                 // Show what we are busy with
                 console.log(`\t${event.section}:${event.method}:: (phase=${phase.toString()})`);
                 console.log(`event.meta.doc:\t${event.meta.documentation.toString()}`);
@@ -80,8 +88,11 @@ async function main() {
                     if (types[index].type == 'Balance') {
                         slashAmount = data.toString();
                     }
-                    listenBlock(api, addr, slashAmount);
                 });
+                if (addr != 'N/A') {
+                    listenBlock(api, addr, slashAmount);
+                }
+                
             }
 
         }); // end of events.forEach
